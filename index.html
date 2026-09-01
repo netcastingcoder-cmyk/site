@@ -454,51 +454,76 @@
 <!-- 1. Подключаем официальную библиотеку EmailJS -->
 <script type="text/javascript" src="https://jsdelivr.net"></script>
 
-<!-- 2. Скрипт связи формы с твоей почтой -->
+<!-- Подключаем официальную библиотеку EmailJS -->
+<script type="text/javascript" src="https://jsdelivr.net"></script>
+
 <script type="text/javascript">
-   (function(){
-      // Твой Public Key
-      emailjs.init("Nrp8SdWV10oMOUVSu");
-   })();
+    // Инициализация с твоим Public Key
+    (function(){
+        emailjs.init("Nrp8SdWV10oMOUVSu");
+    })();
 
-   document.getElementById('landing-contact-form').addEventListener('submit', function(event) {
-       event.preventDefault(); // Запрещаем странице перезагружаться
+    // Находим кнопку отправки по её классу напрямую
+    const submitButton = document.querySelector('.btn-submit');
 
-       const form = this;
-       const btn = document.getElementById('submit-btn');
-       const btnText = btn.innerText; // Запоминаем исходный текст кнопки
+    if (submitButton) {
+        submitButton.addEventListener('click', function(event) {
+            event.preventDefault(); // НАМЕРТВО БЛОКИРУЕМ ОБНОВЛЕНИЕ СТРАНИЦЫ!
 
-       // Меняем текст на кнопке, чтобы клиент видел, что процесс пошел
-       btn.style.pointerEvents = 'none';
-       btn.style.opacity = '0.7';
-       btn.innerText = 'Отправка...';
+            // Находим элементы полей по их id
+            const nameField = document.getElementById('name');
+            const emailField = document.getElementById('email');
+            const messageField = document.getElementById('message');
 
-       // Твои Service ID и Template ID
-       const serviceID = 'service_ad7hvq3';
-       const templateID = 'template_tjy7hla';
+            // Проверяем, чтобы поля не были пустыми
+            if (!nameField.value || !emailField.value || !messageField.value) {
+                alert('Пожалуйста, заполните все поля формы.');
+                return;
+            }
 
-       // Отправляем форму напрямую в EmailJS
-       emailjs.sendForm(serviceID, templateID, form)
-           .then(function() {
-               // Действие при успешной отправке
-               alert('Спасибо! Ваше сообщение успешно отправлено.');
-               form.reset(); // Очищаем поля формы
-               
-               // Возвращаем кнопку в исходное состояние
-               btn.style.pointerEvents = 'auto';
-               btn.style.opacity = '1';
-               btn.innerText = btnText;
-           }, function(error) {
-               // Если что-то пошло не так (например, сбой сети)
-               alert('Ошибка отправки. Пожалуйста, напишите напрямую в Telegram.');
-               console.log('EmailJS FAILED...', error);
-               
-               btn.style.pointerEvents = 'auto';
-               btn.style.opacity = '1';
-               btn.innerText = btnText;
-           });
-   });
+            // Визуальный статус загрузки на кнопке
+            this.style.pointerEvents = 'none';
+            this.style.opacity = '0.7';
+            this.innerText = 'Отправка...';
+
+            // Собираем данные в объект вручную
+            const templateParams = {
+                user_name: nameField.value,
+                user_contact: emailField.value,
+                message: messageField.value
+            };
+
+            // Твои личные ID из EmailJS
+            const serviceID = 'service_ad7hvq3';
+            const templateID = 'template_tjy7hla';
+
+            // Отправляем данные напрямую через API
+            emailjs.send(serviceID, templateID, templateParams)
+                .then(() => {
+                    // Код сработал идеально!
+                    alert('Спасибо! Ваше сообщение успешно отправлено.');
+                    
+                    // Очищаем поля формы
+                    nameField.value = '';
+                    emailField.value = '';
+                    messageField.value = '';
+
+                    // Возвращаем кнопку в норму
+                    this.style.pointerEvents = 'auto';
+                    this.style.opacity = '1';
+                    this.innerText = 'Отправить сообщение';
+                }, (error) => {
+                    alert('Ошибка EmailJS. Проверьте личный кабинет.');
+                    console.log('FAILED...', error);
+                    
+                    this.style.pointerEvents = 'auto';
+                    this.style.opacity = '1';
+                    this.innerText = 'Отправить сообщение';
+                });
+        });
+    }
 </script>
+
 
 
 
