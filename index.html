@@ -208,27 +208,28 @@
         
         <!-- Left -->
         <div class="contact-form-wrapper">
-            <form class="contact-form" id="landing-contact-form">
-                <div class="form-group">
-                    <label for="name" class="form-label">Ваше имя</label>
-                    <input type="text" id="name" name="user_name" class="form-input" placeholder="Александр" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email" class="form-label">Ваш Email или Telegram / WhatsApp</label>
-                    <input type="text" id="email" name="user_contact" class="form-input" placeholder="example@mail.com или @username" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message" class="form-label">Ваш запрос (кратко)</label>
-                    <textarea id="message" name="message" class="form-input form-textarea" rows="4" placeholder="Например: Врач, подготовка к FSP с уровня B2..." required></textarea>
-                </div>
-                
-                <button type="submit" class="btn btn-submit" id="submit-btn">
-                    Отправить сообщение 
-                    <svg viewBox="0 0 24 24" class="btn-arrow"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-            </form>
+            <form class="contact-form" action="mailto:dimitri@ottersbach.biz" method="GET" enctype="text/plain" id="landing-contact-form">
+    <div class="form-group">
+        <label for="name" class="form-label">Ваше имя</label>
+        <input type="text" id="name" name="Имя клиента" class="form-input" placeholder="Александр" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="email" class="form-label">Ваш Email или Telegram / WhatsApp</label>
+        <input type="text" id="email" name="Контакты клиента" class="form-input" placeholder="example@mail.com или @username" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="message" class="form-label">Ваш запрос (кратко)</label>
+        <textarea id="message" name="Текст запроса" class="form-input form-textarea" rows="4" placeholder="Например: Врач, подготовка к FSP с уровня B2..." required></textarea>
+    </div>
+    
+    <button type="submit" class="btn btn-submit" id="submit-btn">
+        Отправить сообщение 
+        <svg viewBox="0 0 24 24" class="btn-arrow"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+</form>
+
         </div>
 
         <!-- Правая колонка: Прямая связь -->
