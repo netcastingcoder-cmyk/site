@@ -403,7 +403,6 @@
         <p class="copyright">&copy;OTTERSBACH 2026. All rights reserved.</p>
     </div>
 </footer>
-<!-- 1. Подключаем официальную библиотеку EmailJS -->
 <script>
     // 1. Скрипт плавной прокрутки к секциям сайта
     document.addEventListener('DOMContentLoaded', () => {
@@ -455,7 +454,7 @@
     });
 </script>
 
-<!-- 3. ИСПРАВЛЕНО: Подключение официальной рабочей библиотеки EmailJS -->
+<!-- 3. Подключение официальной рабочей библиотеки EmailJS -->
 <script type="text/javascript" src="https://jsdelivr.net"></script>
 
 <!-- 4. Скрипт связи формы с твоей почтой -->
@@ -465,43 +464,50 @@
       emailjs.init("Nrp8SdWV10oMOUVSu");
    })();
 
-   document.getElementById('landing-contact-form').addEventListener('submit', function(event) {
-       event.preventDefault(); // Запрещаем странице перезагружаться
+   // НАДЕЖНО: Ждем полную загрузку HTML-структуры сайта
+   document.addEventListener('DOMContentLoaded', () => {
+       const contactForm = document.getElementById('landing-contact-form');
+       
+       if (contactForm) {
+           contactForm.addEventListener('submit', function(event) {
+               event.preventDefault(); // Теперь железно запрещаем странице перезагружаться
 
-       const form = this;
-       const btn = document.getElementById('submit-btn');
-       const btnText = btn.innerText; // Запоминаем исходный текст кнопки
+               const form = this;
+               const btn = document.getElementById('submit-btn');
+               const btnText = btn.innerText; // Запоминаем исходный текст кнопки
 
-       // Меняем текст на кнопке, чтобы клиент видел, что процесс пошел
-       btn.style.pointerEvents = 'none';
-       btn.style.opacity = '0.7';
-       btn.innerText = 'Отправка...';
+               // Меням текст на кнопке для индикации загрузки
+               btn.style.pointerEvents = 'none';
+               btn.style.opacity = '0.7';
+               btn.innerText = 'Отправка...';
 
-       // Твои Service ID и Template ID (УЖЕ ВСТАВЛЕНЫ)
-       const serviceID = 'service_ad7hvq3';
-       const templateID = 'template_tjy7hla';
+               const serviceID = 'service_ad7hvq3';
+               const templateID = 'template_tjy7hla';
 
-       // Отправляем форму напрямую в EmailJS
-       emailjs.sendForm(serviceID, templateID, form)
-           .then(function() {
-               // Действие при успешной отправке
-               alert('Спасибо! Ваше сообщение успешно отправлено.');
-               form.reset(); // Очищаем поля формы
-               
-               // Возвращаем кнопку в исходное состояние
-               btn.style.pointerEvents = 'auto';
-               btn.style.opacity = '1';
-               btn.innerText = btnText;
-           }, function(error) {
-               // Если что-то пошло не так
-               alert('Ошибка отправки. Пожалуйста, напишите напрямую в Telegram.');
-               console.log('EmailJS FAILED...', error);
-               
-               btn.style.pointerEvents = 'auto';
-               btn.style.opacity = '1';
-               btn.innerText = btnText;
+               // Отправляем форму напрямую в EmailJS
+               emailjs.sendForm(serviceID, templateID, form)
+                   .then(function() {
+                       // Действие при успешной отправке
+                       alert('Спасибо! Ваше сообщение успешно отправлено.');
+                       form.reset(); // Очищаем поля формы
+                       
+                       // Возвращаем кнопку в исходное состояние
+                       btn.style.pointerEvents = 'auto';
+                       btn.style.opacity = '1';
+                       btn.innerText = btnText;
+                   }, function(error) {
+                       // Если произошла ошибка
+                       alert('Ошибка отправки. Пожалуйста, напишите напрямую в Telegram.');
+                       console.log('EmailJS FAILED...', error);
+                       
+                       btn.style.pointerEvents = 'auto';
+                       btn.style.opacity = '1';
+                       btn.innerText = btnText;
+                   });
            });
+       }
    });
 </script>
+
 </body>
 </html>
