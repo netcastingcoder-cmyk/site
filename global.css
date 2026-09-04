@@ -983,7 +983,6 @@ About section
     display: block;
     object-fit: cover;
     
-    /* Фокусируем обрезку на верхней части фото (лицо и голова), а не по центру */
     object-position: top center; 
 }
 .expert-avatar-large {
