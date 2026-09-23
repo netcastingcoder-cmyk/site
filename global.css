@@ -6,7 +6,7 @@
 
 html {
     scroll-behavior: smooth;
-    background-color: #0D1117;
+    background-color: /*#0D1117;*/#383E42;
     color: #FFFFFF;
     font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
